@@ -1,0 +1,21 @@
+{
+  "name": "leona",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "@neoxr/wb": "^6.0.0-rc.10",
+    "@whiskeysockets/baileys": "^6.7.20",
+    "baileys": "^6.7.20",
+    "cheerio": "^1.1.2",
+    "node-fetch": "^3.3.2",
+    "qrcode-terminal": "^0.12.0"
+  }
+}

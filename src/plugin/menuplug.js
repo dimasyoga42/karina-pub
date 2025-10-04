@@ -1,0 +1,51 @@
+export const menu = async (sock, chatId, msg) => {
+  try {
+    const caption = `
+    ━━━━━━━━━━━━━━━━━━
+K a r i n a
+halo ${msg.pushName}
+━━━━━━━━━━━━━━━━━━
+gunakan `.minta` untuk memberikan saran fitur pada devloper
+━━━━━━━━━━━━━━━━━━
+*General:*
+➣ .cekid
+➣ .cekvip
+➣ .rules
+➣ .news
+━━━━━━━━━━━━━━━━━━
+*Sosial:*
+➣ .setpp
+➣ .setbio
+➣ .profile
+➣ .cekprofile
+➣ .member
+━━━━━━━━━━━━━━━━━━
+*Admin:*
+➣ .close
+➣ .open
+➣ .hidetag
+➣ .kick
+➣ .setwc
+➣ .setnews
+➣ .setrules
+➣ .setwc
+➣ .setmem
+━━━━━━━━━━━━━━━━━━
+*Toram:*
+➣ .item <name>
+➣ .lv <level>
+➣ .buff
+➣ .ability
+➣ .xtall
+➣ .regist
+➣ .bos
+━━━━━━━━━━━━━━━━
+*Guide Toram*
+━━━━━━━━━━━━━━━━
+
+    `.trim()
+    sock.sendMessage(chatId, {text: caption}, {quoted: msg});
+  } catch (err) {
+    await sock.sendMessage(chatId, {text: err})
+  }
+}
