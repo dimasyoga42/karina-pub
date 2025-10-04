@@ -9,7 +9,7 @@ import {
 } from "@whiskeysockets/baileys";
 import qrcode from "qrcode-terminal";
 import { kick } from "./src/model/admin.js";
-import { hidetag } from "../KarinaV1/src/function/admin.js";
+//import { hidetag } from "../KarinaV1/src/function/admin.js";
 import { adminMenu } from "./src/cmd/menuAdmin.js";
 import { cmdGrub } from "./src/cmd/menuGrub.js";
 import { sendWelcome } from "./src/plugin/wcplug.js";
