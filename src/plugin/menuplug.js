@@ -1,11 +1,10 @@
 export const menu = async (sock, chatId, msg) => {
   try {
-    const caption = `
-    ━━━━━━━━━━━━━━━━━━
+    const caption = `━━━━━━━━━━━━━━━━━━
 K a r i n a
 halo ${msg.pushName}
 ━━━━━━━━━━━━━━━━━━
-gunakan `.minta` untuk memberikan saran fitur pada devloper
+gunakan \`.minta\` untuk memberikan saran fitur pada developer
 ━━━━━━━━━━━━━━━━━━
 *General:*
 ➣ .cekid
@@ -28,7 +27,6 @@ gunakan `.minta` untuk memberikan saran fitur pada devloper
 ➣ .setwc
 ➣ .setnews
 ➣ .setrules
-➣ .setwc
 ➣ .setmem
 ━━━━━━━━━━━━━━━━━━
 *Toram:*
@@ -39,13 +37,16 @@ gunakan `.minta` untuk memberikan saran fitur pada devloper
 ➣ .xtall
 ➣ .regist
 ➣ .bos
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━
 *Guide Toram*
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━`;
 
-    `.trim()
-    sock.sendMessage(chatId, {text: caption}, {quoted: msg});
+    await sock.sendMessage(chatId, { text: caption }, { quoted: msg });
+
   } catch (err) {
-    await sock.sendMessage(chatId, {text: err})
+    console.error("Error in menu:", err);
+    await sock.sendMessage(chatId, {
+      text: `❌ Terjadi kesalahan: ${err.message}`
+    });
   }
-}
+};
