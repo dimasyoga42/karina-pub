@@ -14,7 +14,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
     const name = msg.pushName;
 
     if (!welcomeMsg) {
-      return sock.sendMessage(chatId, {
+       sock.sendMessage(chatId, {
         text: "Format salah\nCara penggunaan:\n- `.setwelcome <pesan welcome>`\n\nGunakan variabel:\n- @user = mention user baru\n- @group = nama grup"
       });
     }
@@ -32,7 +32,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
       };
       data.push(newData);
       saveUserData(db, data);
-      return sock.sendMessage(
+       sock.sendMessage(
         chatId,
         { text: " Pesan welcome berhasil diatur!" },
         { quoted: msg }
@@ -45,7 +45,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
     eWelcome.updatedAt = new Date().toISOString();
     saveUserData(db, data);
 
-    return sock.sendMessage(
+     sock.sendMessage(
       chatId,
       { text: " Pesan welcome berhasil diperbarui!" },
       { quoted: msg }

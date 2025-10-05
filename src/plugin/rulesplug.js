@@ -10,7 +10,7 @@ try {
   const data = getUserData(db);
   const grubId = msg.key.remoteJid
   const name = msg.pushName
-  if(!rule) return sock.sendMessage(chatId, {text: "format salah\ncara penggunaan:\n- `.setrules <rules grub>`"})
+  if(!rule) {sock.sendMessage(chatId, {text: "format salah\ncara penggunaan:\n- `.setrules <rules grub>`"})}
   let eRules = data.find((i) => i.grubId === grubId)
   if(!eRules) {
     const newData = {
@@ -25,7 +25,7 @@ try {
   }
   eRules.rules = rule;
   saveUserData(db, data);
-  return sock.sendMessage(chatId, {text: "rules berhasil di edit"});
+  sock.sendMessage(chatId, {text: "rules berhasil di edit"});
 } catch (err) {
   sock.sendMessage(chatId, {text: err});
 }
