@@ -103,8 +103,6 @@ export const isUserAdmin = async (sock, msg, chatId) => {
         { quoted: msg }
       );
     }
-
-    return isAdmin;
   } catch (error) {
     console.error("Error in isUserAdmin:", error);
     return false;
