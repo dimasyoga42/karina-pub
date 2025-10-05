@@ -97,9 +97,9 @@ export const isUserAdmin = async (sock, msg, chatId) => {
     );
 
     if (!isAdmin) {
-      await sock.sendMessage(
+     return  await sock.sendMessage(
         chatId,
-        { text: "Perintah ini hanya bisa digunakan oleh admin grup!" },
+        { text: "kamu bukan admin grub, tidak bisa menggunakan printah ini" },
         { quoted: msg }
       );
     }
