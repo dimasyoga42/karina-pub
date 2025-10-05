@@ -63,7 +63,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
 export const toggleWelcome = async (sock, chatId, msg, status) => {
   try {
     const isAdmin = await isUserAdmin(sock, msg, chatId);
-    if (!isAdmin) return;
+    if (!isAdmin) return false;
 
     const data = getUserData(db);
     const grubId = msg.key.remoteJid;
