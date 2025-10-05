@@ -21,7 +21,7 @@ try {
       } else if (text.startsWith(".setwc")) {
         const wc = text.replace(".setwc", "");
         setWelcome(sock, chatId, msg, wc);
-      }else if (text.startsWith(".setnews")) {
+      } else if (text.startsWith(".setnews")) {
         const news = text.replace(".setnews", "");
         setnews(sock, chatId, msg, news);
       }
