@@ -109,7 +109,7 @@ export const sendWelcome = async (sock, groupMetadata, newMembers) => {
       welcomeText = welcomeText.replace(/@user/g, `@${member.split("@")[0]}`);
       welcomeText = welcomeText.replace(/@group/g, groupMetadata.subject);
 
-      await sock.sendMessage(grubId, {
+     return  await sock.sendMessage(grubId, {
         text: welcomeText,
         mentions: [member]
       });

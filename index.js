@@ -8,8 +8,6 @@ import {
   downloadMediaMessage,
 } from "@whiskeysockets/baileys";
 import qrcode from "qrcode-terminal";
-import { kick } from "./src/model/admin.js";
-//import { hidetag } from "../KarinaV1/src/function/admin.js";
 import { adminMenu } from "./src/cmd/menuAdmin.js";
 import { cmdGrub } from "./src/cmd/menuGrub.js";
 import { sendWelcome } from "./src/plugin/wcplug.js";
@@ -59,7 +57,7 @@ async function start() {
     sock.ev.on("group-participants.update", async (mess) => {
       if(mess.action == "add") {
         const groupMetadata = await sock.groupMetadata(mess.id);
-        sendWelcome(sock, groupMetadata, mess.participants)
+       return  sendWelcome(sock, groupMetadata, mess.participants)
       }
     })
     adminMenu(text, sock, chatId, msg)
