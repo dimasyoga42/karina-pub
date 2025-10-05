@@ -1,4 +1,5 @@
 import { close, hidetag, kick, open } from "../model/admin.js";
+import { setnews } from "../plugin/newsplug.js";
 import { setRules } from "../plugin/rulesplug.js";
 import { setWelcome } from "../plugin/wcplug.js";
 
@@ -20,6 +21,9 @@ try {
       } else if (text.startsWith(".setwc")) {
         const wc = text.replace(".setwc", "");
         setWelcome(sock, chatId, msg, wc);
+      }else if (text.startsWith(".setnews")) {
+        const news = text.replace(".setnews", "");
+        setnews(sock, chatId, msg, news);
       }
 } catch (err) {
   console.log(err)
