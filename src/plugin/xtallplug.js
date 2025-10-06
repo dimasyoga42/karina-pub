@@ -24,7 +24,7 @@ export const getXtall = async (sock, chatId, msg, name) => {
 *Tipe* : ${xtall.type}
 *Upgrade* : ${upgradeInfo}
 *Stat* :
-${xtall.stat.split(";").map(s => s.trim()).join("\n- ")}`.trim();
+${xtall.stat.split(";" || ",").map(s => s.trim()).join("\n- ")}`.trim();
             })
             .join("\n");
 
