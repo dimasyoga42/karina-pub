@@ -11,6 +11,7 @@ import qrcode from "qrcode-terminal";
 import { adminMenu } from "./src/cmd/menuAdmin.js";
 import { cmdGrub } from "./src/cmd/menuGrub.js";
 import { sendWelcome } from "./src/plugin/wcplug.js";
+import { toramMenu } from "./src/cmd/menuToram.js";
 async function start() {
   const { state, saveCreds } = await useMultiFileAuthState("./auth_info");
   const { version } = await fetchLatestBaileysVersion();
@@ -62,6 +63,7 @@ async function start() {
     })
     adminMenu(text, sock, chatId, msg)
     cmdGrub(sock, text, chatId, msg)
+    toramMenu(text, sock, chatId, msg)
   })
 }
 async function startWithRetry() {
