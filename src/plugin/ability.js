@@ -12,7 +12,7 @@ export const ability = async (sock, chatId, msg, name) => {
     // Normalize name untuk pencarian yang lebih fleksibel
     const normalizedName = name.toLowerCase().trim();
 
-    const res = await Getaxios(`https://toramonline.vercel.app/ability/${normalizedName}`);
+    const res = await Getaxios(`https://toramonline.vercel.app/ability/name/${normalizedName}`);
     console.log('API Response:', res);
 
     const data = res.data;
