@@ -1,6 +1,6 @@
 import { getUserData, saveUserData } from "../config/config.js";
 import { isUserAdmin } from "../model/admin.js";
-
+import path from "path"
 const dbPath = path.resolve("db", "grubmem.json");
 
 export const setMember = async (sock, chatId, msg, role, ign) => {
