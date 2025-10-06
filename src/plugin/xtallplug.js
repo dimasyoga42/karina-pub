@@ -1,35 +1,31 @@
-import fetch from "node-fetch";
+import axios from "axios";
 
-export const searchXtall = async (sock, chatId, msg, arg) => {
-  try {
-    // Ekstrak query dari pesan (misalnya setelah command)
-    const query = arg.trim();
-    const response = await fetch(`http://toramonline.vercel.app/xtall/name/${query}`);
-    const res = await response.data;;
+export const getXtall = async (sock, chatId, msg, name) => {
+    try {
+        const res = await axios.get(`https://toramonline.vercel.app/xtall/name/${name}`);
+        const data = res.data;
 
-    if (!query) {
-      await sock.sendMessage(chatId, { text: 'Silakan masukkan nama Xtall yang ingin dicari!' });
-      return;
+        if (!Array.isArray(data) || data.length === 0) {
+            return sock.sendMessage(chatId, { text: "Xtall tidak ditemukan!" });
+        }
+
+        // Gabungkan semua xtall jadi satu string
+        const combinedCaption = data
+            .map((xtall, index) => {
+                return `
+━━━━━━━━━━━━━━━━━━━━
+ Name   : ${xtall.name}
+ Type   : ${xtall.type}
+ Upgrade: ${xtall.upgrade || "-"}
+ Stat   :\n${xtall.stat}`;
+            })
+            .join("\n");
+
+        const finalMessage = `${combinedCaption}\n━━━━━━━━━━━━━━━━━━━━`.trim();
+
+        await sock.sendMessage(chatId, { text: finalMessage });
+    } catch (error) {
+        console.error("Error fetching xtall:", error.message);
+        sock.sendMessage(chatId, { text: "❌ Gagal mengambil data dari REST API." });
     }
-
-    // Cari data
-    const result = await res.data;
-
-    // Format response
-    const responseText = `
- *Xtall Information*
- Name: ${result.name}
- Type: ${result.type}
- Upgrade: ${result.upgrade}
- Stat: ${result.stat}
-    `.trim();
-
-    await sock.sendMessage(chatId, { text: responseText });
-
-  } catch (error) {
-    console.error('Error in searchXtall:', error);
-    await sock.sendMessage(chatId, {
-      text: `Terjadi kesalahan: ${error.message || 'Tidak dapat menemukan data Xtall'}`
-    });
-  }
 };
