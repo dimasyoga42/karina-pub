@@ -13,7 +13,7 @@ const API_BASE_URL = "https://toramonline.vercel.app";
 export const getXtall = async (sock, chatId, msg, name) => {
     try {
         // Menggunakan destructuring untuk langsung mengambil 'data' dari respons
-        const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name)}`);
+        const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name.trim())}`);
 
         // Memberikan judul atau header untuk konteks pencarian
         const searchHeader = `*Hasil Pencarian untuk "${name}":*\n`;
