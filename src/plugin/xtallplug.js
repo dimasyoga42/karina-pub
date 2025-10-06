@@ -3,34 +3,28 @@ import { Getaxios } from "../config/config.js";
 // Sebaiknya definisikan URL dasar API di satu tempat untuk kemudahan pengelolaan
 const API_BASE_URL = "https://toramonline.vercel.app";
 
-/**
- * Mengambil dan menampilkan data Crysta (Xtall) dari Toram Online API.
- * @param {object} sock - Objek koneksi dari Baileys atau library serupa.
- * @param {string} chatId - ID dari chat target.
- * @param {object} msg - Objek pesan asli (jika diperlukan untuk konteks).
- * @param {string} name - Nama Xtall yang akan dicari.
- */
+
 export const getXtall = async (sock, chatId, msg, name) => {
     try {
-        // Menggunakan destructuring untuk langsung mengambil 'data' dari respons
+
         const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name.trim())}`);
 
-        // Memberikan judul atau header untuk konteks pencarian
+
         const searchHeader = `*Hasil Pencarian untuk "${name}":*\n`;
 
-        // Memproses data dan membatasinya (misal, hanya 5 hasil teratas) untuk menghindari spam
+
         const xtallsInfo = data
-            .slice(0, 5) // Mengambil maksimal 5 item pertama
+            .slice(0, 5)
             .map(xtall => {
-                // Menggunakan nullish coalescing operator (??) untuk nilai default
+
                 const upgradeInfo = xtall.upgrade ?? "-";
                 return `
 ━━━━━━━━━━━━━━━━━━━━
-  *Nama* : ${xtall.name}
-  *Tipe* : ${xtall.type}
-  *Upgrade* : ${upgradeInfo}
-  *Stat* :
-${xtall.stat}`;
+*Nama* : ${xtall.name}
+*Tipe* : ${xtall.type}
+*Upgrade* : ${upgradeInfo}
+*Stat* :
+${xtall.stat}`.trim();
             })
             .join("\n");
 
