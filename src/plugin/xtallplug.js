@@ -8,7 +8,7 @@ export const getXtall = async (sock, chatId, msg, name) => {
     try {
 
         const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name.trim())}`);
-
+        if(!data) return sock.sendMessage(chatId, {text: "tidak ada"})
 
         const searchHeader = `*Hasil Pencarian untuk "${name}":*\n`;
 
@@ -24,7 +24,7 @@ export const getXtall = async (sock, chatId, msg, name) => {
 *Tipe* : ${xtall.type}
 *Upgrade* : ${upgradeInfo}
 *Stat* :
-${xtall.stat}`.trim();
+${xtall.stat.split(";")[0].join("\n-")}`.trim();
             })
             .join("\n");
 
