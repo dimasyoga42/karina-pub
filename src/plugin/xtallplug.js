@@ -21,7 +21,9 @@ const find = async (query) => {
         stat: res.stat
       };
       database.push(newdata);
+      console.log(res.data);
       return newdata;
+
     } else {
       throw new Error('Data tidak ditemukan');
     }
