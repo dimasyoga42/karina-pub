@@ -1,6 +1,7 @@
 import { getItems } from "../plugin/itemsplug.js";
 import { screper } from "../plugin/lvlplug.js";
 import { menu } from "../plugin/menuplug.js";
+import { news } from "../plugin/newsplug.js";
 import { cekBio, cekProfile, myBio, myProfile, setDesc, setPP } from "../plugin/plugprofil.js";
 import { rules } from "../plugin/rulesplug.js";
 
@@ -75,6 +76,10 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
     // My Bio
     if (normalizedText === '.mybio') {
       await myBio(sock, chatId, msg);
+      return;
+    }
+     if (normalizedText === '.news') {
+      await news(sock, chatId, msg)
       return;
     }
 

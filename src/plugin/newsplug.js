@@ -28,3 +28,14 @@ export const setnews = async (sock, chatId, msg, news) => {
     sock.sendMessage(chatId, {text: err});
   }
 }
+export const news = async (sock, chatId, msg) => {
+  try {
+    const data = getUserData(db)
+    let searchData = data.find((s) => s.id === id);
+    if(!searchData) return sock.sendMessage(chatId, {text: "news belum di tambahkan\ngunakan:\n> .setnews untuk menambahkan"}, {quoted: msg})
+      const caption = `${searchData.news}\n dibuat: ${searchData.by}`.trim()
+    sock.sendMessage(chatId, {text: caption}, {quoted: msg})
+  } catch (error) {
+    sock.sendMessage(chatId, {text: error}, {quoted: msg})
+  }
+}
