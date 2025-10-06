@@ -2,7 +2,7 @@ import { Getaxios } from "../config/config.js";
 
 export const getXtall = async (sock, chatId, msg, name) => {
     try {
-        const res = await Getaxios (`https://toramonline.vercel.app/regist/name/${name}`);
+        const res = await Getaxios (`https://toramonline.vercel.app/xtall/name/${encodeURIComponent(name)}`);
         const data = res.data;
 
 
