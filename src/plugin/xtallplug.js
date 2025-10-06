@@ -2,8 +2,9 @@ import { Getaxios } from "../config/config.js";
 
 export const getXtall = async (sock, chatId, msg, name) => {
     try {
-        const res = await Getaxios (`https://toramonline.vercel.app/xtall/name/${name}`);
+        const res = await Getaxios (`https://toramonline.vercel.app/regist/name/${name}`);
         const data = res.data;
+
 
         if (!Array.isArray(data) || data.length === 0) {
             return sock.sendMessage(chatId, { text: "Xtall tidak ditemukan!" });
