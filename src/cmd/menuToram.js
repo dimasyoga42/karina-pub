@@ -1,4 +1,4 @@
-import { name } from "../../../KarinaV1/src/global/variabel.js";
+
 import { ability } from "../plugin/ability.js";
 import { getbuff } from "../plugin/buffplug.js";
 import { getXtall } from "../plugin/xtallplug.js";
