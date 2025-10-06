@@ -10,7 +10,7 @@ const find = async (query) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const res = await response.json();
+    const res = await response.data;;
 
     // Validasi data sebelum push
     if (res && res.name) {
