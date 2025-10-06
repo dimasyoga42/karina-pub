@@ -4,7 +4,7 @@ const API_BASE_URL = "https://toramonline.vercel.app";
 
 export const getXtall = async (sock, chatId, msg, name) => {
   try {
-    const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name.trim())}`);
+    const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name)}`);
 
     // Ambil array xtall dari data.data
     const xtalls = data.data || [];
