@@ -15,12 +15,6 @@ export const getXtall = async (sock, chatId, msg, name) => {
         // Menggunakan destructuring untuk langsung mengambil 'data' dari respons
         const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name)}`);
 
-        // Pengecekan yang lebih solid, memastikan data adalah array dan tidak kosong
-        if (!data || !Array.isArray(data) || data.length === 0) {
-            await sock.sendMessage(chatId, { text: `Maaf, Xtall dengan nama "${name}" tidak dapat ditemukan.` });
-            return; // Hentikan eksekusi fungsi setelah mengirim pesan
-        }
-
         // Memberikan judul atau header untuk konteks pencarian
         const searchHeader = `*Hasil Pencarian untuk "${name}":*\n`;
 
