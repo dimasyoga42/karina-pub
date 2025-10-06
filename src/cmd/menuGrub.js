@@ -1,5 +1,6 @@
 import { getItems } from "../plugin/itemsplug.js";
 import { screper } from "../plugin/lvlplug.js";
+import { getMember, setMember } from "../plugin/member.js";
 import { menu } from "../plugin/menuplug.js";
 import { news } from "../plugin/newsplug.js";
 import { cekBio, cekProfile, myBio, myProfile, setDesc, setPP } from "../plugin/plugprofil.js";
@@ -66,6 +67,22 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       await screper(sock, chatId, msg, level, 7);
       return;
     }
+    if (text.startsWith(".setmember")) {
+            const arg = text.split(",").map(a => a.trim()); // trim spasi
+            const mention = arg[1]; // mention target user
+            const ign = arg[2];
+            const role = arg[3];
+
+            if (!ign || !role) {
+              await sock.sendMessage(chatId, {
+                text: "❌ Format salah!\nGunakan: `.setmember ,@user ,IGN ,Role`",
+              });
+              return;
+            }
+            setMember(sock, chatId, msg, role, ign);
+          } else if (text === ".member") {
+            getMember(sock, chatId, msg)
+          }
 
     // Rules
     if (normalizedText === '.rules') {

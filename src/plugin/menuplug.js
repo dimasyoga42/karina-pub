@@ -4,7 +4,7 @@ export const menu = async (sock, chatId, msg) => {
 K a r i n a
 halo ${msg.pushName}
 ━━━━━━━━━━━━━━━━━━
-gunakan \`.minta\` untuk memberikan saran fitur pada developer
+
 ━━━━━━━━━━━━━━━━━━
 *General:*
 ➣ .cekid
