@@ -1,5 +1,5 @@
-import { getUserData, saveUserData } from "../config/config";
-import { isUserAdmin } from "../model/admin";
+import { getUserData, saveUserData } from "../config/config.js";
+import { isUserAdmin } from "../model/admin.js";
 
 const dbPath = path.resolve("db", "grubmem.json");
 
@@ -76,7 +76,7 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
       mentions: [target],
     });
   } catch (err) {
-    errMessage(sock, chatId, msg, err);
+  //  errMessage(sock, chatId, msg, err);
   }
 };
 
@@ -108,6 +108,6 @@ export const getMember = async (sock, chatId, msg) => {
       mentions,
     });
   } catch (err) {
-    errMessage(sock, chatId, msg, err);
+//    errMessage(sock, chatId, msg, err);
   }
 };

@@ -1,6 +1,4 @@
-import { Getaxios } from "../../config/axiosGet.js";
-import { errMessage } from "../../global/variabel.js";
-
+import { Getaxios } from "../config/config.js";
 export const ability = async (sock, chatId, msg, name) => {
   try {
     // Validasi input name
@@ -91,7 +89,6 @@ export const ability = async (sock, chatId, msg, name) => {
       });
     } else {
       // Generic error fallback
-      errMessage(sock, chatId, msg, err);
     }
   }
 };
@@ -135,6 +132,6 @@ export const abilityByTier = async (sock, chatId, msg, tier) => {
 
   } catch (err) {
     console.error('Error in abilityByTier function:', err);
-    errMessage(sock, chatId, msg, err);
+
   }
 };
