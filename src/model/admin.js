@@ -40,14 +40,14 @@ export const isBotAdmin = async (sock, msg, chatId) => {
 		// Jika bot tidak ditemukan di grup
 		if (!botParticipant) {
 			console.error("Bot tidak ditemukan sebagai member grup");
-			await sock.sendMessage(
+			return await sock.sendMessage(
 				chatId,
 				{
 					text: "Bot tidak ditemukan sebagai member grup ini.",
 				},
 				{ quoted: msg }
 			);
-			return false;
+			//return false;
 		}
 
 		// Cek status admin - admin bisa 'admin' atau 'superadmin'
@@ -57,14 +57,14 @@ export const isBotAdmin = async (sock, msg, chatId) => {
 		console.log("Is bot admin:", isAdmin);
 
 		if (!isAdmin) {
-			await sock.sendMessage(
+		return	await sock.sendMessage(
 				chatId,
 				{
 					text: "*BOT BUKAN ADMIN*\nBot memerlukan status admin untuk menjalankan perintah ini.",
 				},
 				{ quoted: msg }
 			);
-			return false;
+			//return false;
 		}
 
 		return true;
