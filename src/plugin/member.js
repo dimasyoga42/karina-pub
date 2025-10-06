@@ -7,10 +7,9 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
   try {
     // hanya admin yang boleh tambah member
     if (!isUserAdmin(sock, msg, chatId)) {
-      await sock.sendMessage(chatId, {
+      return await sock.sendMessage(chatId, {
         text: "❌ Hanya admin yang bisa menggunakan perintah ini!",
       });
-      return;
     }
 
     let data = getUserData(dbPath) || [];
@@ -21,7 +20,6 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
       await sock.sendMessage(chatId, {
         text: "❌ Harap mention user yang mau ditambahkan!",
       });
-      return;
     }
 
     const target = mentioned[0]; // user yang ditambahkan
@@ -31,7 +29,6 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
       await sock.sendMessage(chatId, {
         text: "❌ Harap sertakan *Role* dan *IGN*!",
       });
-      return;
     }
 
     // cari grub berdasarkan chatId
@@ -59,7 +56,6 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
           text: ` @${target.split("@")[0]} sudah terdaftar sebagai member.`,
           mentions: [target],
         });
-        return;
       }
 
       dataEntry.member.push({
