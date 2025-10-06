@@ -1,36 +1,31 @@
-import axios from "axios";
+import { Getaxios } from "../config/config.js";
 
 export const getXtall = async (sock, chatId, msg, name) => {
-  try {
-    const res = await axios.get(`https://toramonline.vercel.app/xtall/name/${name}`);
-    const data = res.data; // ✅ ambil array dari field "data"
-    console.log(data)
+    try {
+        const res = await Getaxios (`https://toramonline.vercel.app/xtall/name/${name}`);
+        const data = res.data;
 
-    if (!Array.isArray(data) || data.length === 0) {
-      return sock.sendMessage(chatId, { text: "❌ Xtall tidak ditemukan!" });
-    }
+        if (!Array.isArray(data) || data.length === 0) {
+            return sock.sendMessage(chatId, { text: "Xtall tidak ditemukan!" });
+        }
 
-    // Gabungkan semua xtall jadi satu string
-    const combinedCaption = data
-      .map((xtall) => {
-        return `
+        // Gabungkan semua xtall jadi satu string
+        const combinedCaption = data
+            .map((xtall, index) => {
+                return `
 ━━━━━━━━━━━━━━━━━━━━
-Name   : ${xtall.name}
-Type   : ${xtall.type}
-Upgrade: ${xtall.upgrade || "-"}
-Stat   :
-${xtall.stat}`;
-      })
-      .join("\n");
+ Name   : ${xtall.name}
+ Type   : ${xtall.type}
+ Upgrade: ${xtall.upgrade || "-"}
+ Stat   :\n${xtall.stat}`;
+            })
+            .join("\n");
 
-    const finalMessage = `${combinedCaption}\n━━━━━━━━━━━━━━━━━━━━`.trim();
+        const finalMessage = `${combinedCaption}\n━━━━━━━━━━━━━━━━━━━━`.trim();
 
-    await sock.sendMessage(chatId, { text: finalMessage });
-  } catch (error) {
-    console.error("Error fetching xtall:", error.message);
-    if (error.response) {
-      console.error("Status:", error.response.status, "Data:", error.response.data);
+        await sock.sendMessage(chatId, { text: finalMessage });
+    } catch (error) {
+        console.error("Error fetching xtall:", error.message);
+        sock.sendMessage(chatId, { text: "❌ Gagal mengambil data dari REST API." });
     }
-    await sock.sendMessage(chatId, { text: "❌ Gagal mengambil data dari REST API." });
-  }
 };

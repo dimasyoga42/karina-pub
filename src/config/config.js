@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-
+import axios from "axios";
 // Pastikan direktori file tujuan ada
 const ensureDir = (dbPath) => {
   const dir = path.dirname(dbPath);
@@ -27,5 +27,15 @@ export const saveUserData = (dbPath, data) => {
     fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
   } catch (err) {
     console.error(`Error writing to ${dbPath}:`, err);
+  }
+};
+
+export const Getaxios = async (link) => {
+  try {
+    const { data } = await axios.get(link);
+    return data;
+  } catch (error) {
+    console.error(`[❌] GET ${link} failed:`, error?.message || error);
+    throw error;
   }
 };
