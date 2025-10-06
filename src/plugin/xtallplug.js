@@ -1,41 +1,11 @@
 import fetch from "node-fetch";
 
-const database = [];
-
-const find = async (query) => {
-  try {
-    const response = await fetch(`http://toramonline.vercel.app/xtall/name/${query}`);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const res = await response.data;;
-
-    // Validasi data sebelum push
-    if (res && res.name) {
-      const newdata = {
-        name: res.name,
-        type: res.type,
-        upgrade: res.upgrade,
-        stat: res.stat
-      };
-      database.push(newdata);
-      console.log(res.data);
-      return newdata;
-
-    } else {
-      throw new Error('Data tidak ditemukan');
-    }
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const searchXtall = async (sock, chatId, msg, arg) => {
   try {
     // Ekstrak query dari pesan (misalnya setelah command)
     const query = arg.trim();
+    const response = await fetch(`http://toramonline.vercel.app/xtall/name/${query}`);
+    const res = await response.data;;
 
     if (!query) {
       await sock.sendMessage(chatId, { text: 'Silakan masukkan nama Xtall yang ingin dicari!' });
@@ -43,7 +13,7 @@ export const searchXtall = async (sock, chatId, msg, arg) => {
     }
 
     // Cari data
-    const result = await find(query);
+    const result = await res.data;
 
     // Format response
     const responseText = `
