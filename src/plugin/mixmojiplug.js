@@ -27,19 +27,8 @@ export const Mix = async (sock, chatId, msg, argone, argtow) => {
     // Ambil URL gambar (biasanya di results[0].media_formats.png_transparent.url)
     const imageUrl = data.results[0]?.url;
 
-    if (!imageUrl) {
-      throw new Error('URL gambar tidak ditemukan');
-    }
-
-    // Download gambar dari URL
-    const imageResponse = await axios.get(imageUrl, {
-      responseType: 'arraybuffer'
-    });
-
-    const buffer = Buffer.from(imageResponse.data);
-
     // Konversi ke sticker
-    const sticker = await sharp(buffer)
+    const sticker = await sharp(imageUrl)
       .resize(STICKER_SIZE, STICKER_SIZE, {
         fit: "contain",
         background: { r: 0, g: 0, b: 0, alpha: 0 }
