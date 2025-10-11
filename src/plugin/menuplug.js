@@ -37,7 +37,7 @@ halo ${msg.pushName}
 ➣ .xtall
 ➣ .regist
 ➣ .bos (coming soon)
-➣ .pembolong (coming soon)
+➣ .pembolong
 ━━━━━━━━━━━━━━━━━━
 *Guide Toram*
 ━━━━━━━━━━━━━━━━━━`;
