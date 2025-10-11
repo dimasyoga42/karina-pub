@@ -14,7 +14,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const data = await response.json();
-    console.log(data);
+    console.log(url);
 
   } catch (err) {
     console.error("Mix error:", err);
