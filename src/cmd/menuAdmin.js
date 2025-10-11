@@ -1,6 +1,7 @@
 import { close, hidetag, kick, open } from "../model/admin.js";
 import { setnews } from "../plugin/newsplug.js";
 import { setRules } from "../plugin/rulesplug.js";
+import { GrubId } from "../plugin/vip_module/grubId.js";
 import { setWelcome } from "../plugin/wcplug.js";
 
 export const adminMenu = async (text, sock, chatId, msg) => {
@@ -24,6 +25,8 @@ try {
       } else if (text.startsWith(".setnews")) {
         const news = text.replace(".setnews", "");
         setnews(sock, chatId, msg, news);
+      }else if (text.startsWith(".cekid")) {
+        GrubId(sock, chatId, msg)
       }
 } catch (err) {
   console.log(err)
