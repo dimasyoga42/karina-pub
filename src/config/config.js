@@ -39,3 +39,20 @@ export const Getaxios = async (link) => {
     throw error;
   }
 };
+
+export const saran = async (s, c, m, arg) => {
+  try {
+    if(!arg) {
+      s.sendMessage(c, {text: "masukan saran anda setelah `.saran`"}, {quoted: m});
+      return
+    }
+    const senderName = m.pushName;
+    const template = `
+    *KOTAK SARAN*\nNama Pengirim : ${senderName}\n Saran: ${arg}
+    `
+    s.sendMessage(6285789109095, {text: template })
+    s.sendMessage(c, {text: template }, {quoted: m})
+  } catch (err) {
+    s.sendMessage(c, {text: `err message: ${err}`}, {quoted: m});
+  }
+}

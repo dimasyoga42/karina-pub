@@ -1,3 +1,4 @@
+import { saran } from "../config/config.js";
 import { getItems } from "../plugin/itemsplug.js";
 import { screper } from "../plugin/lvlplug.js";
 import { getMember, setMember } from "../plugin/member.js";
@@ -128,6 +129,11 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
         return;
       }
       qc(sock, chatId, msg, message);
+      return;
+    }
+    if (normalizedText.startsWith(".saran")) {
+      const message = text.replace(".saran", "").trim();
+      saran(sock, chatId, msg, message);
       return;
     }
     if (text.startsWith(".mixmoji")) {
