@@ -22,6 +22,6 @@ export const qc = async (sock, chatId, msg, message) => {
 			.toBuffer();
       await sock.sendMessage(chatId, { sticker: sticker, mimetype: "image/webp" }, { quoted: msg });
   } catch (err) {
-
+    sock.sendMessage(chatId, {text: err}, {quoted: msg})
   }
 }
