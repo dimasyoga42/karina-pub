@@ -85,7 +85,7 @@ export const isBotAdmin = async (sock, msg, chatId) => {
 export const isUserAdmin = async (sock, msg, chatId) => {
   try {
     const isGroup = chatId.endsWith("@g.us");
-    if (!isGroup) return true
+    if (!isGroup) return true; // Jika bukan grup, anggap user adalah "admin"
 
     const senderId = msg.key.participant || msg.key.remoteJid;
     const groupMetadata = await sock.groupMetadata(chatId);
@@ -96,12 +96,13 @@ export const isUserAdmin = async (sock, msg, chatId) => {
         (participant.admin === "admin" || participant.admin === "superadmin")
     );
 
-    if (!isAdmin) return
+    return isAdmin; // <- penting, supaya hasil dikembalikan
   } catch (error) {
     console.error("Error in isUserAdmin:", error);
-    return false;
+    return false; // kembalikan false jika ada error
   }
 };
+
 
 
 
