@@ -133,7 +133,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
     if (text.startsWith(".mixmoji")) {
       const message = text.split("|")
       const arg1 = message[1]
-      const arg2 = message[3]
+      const arg2 = message[2]
       Mix(sock, chatId, msg, arg1, arg2);
       return;
     }
