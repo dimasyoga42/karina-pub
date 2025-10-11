@@ -85,7 +85,7 @@ export const isBotAdmin = async (sock, msg, chatId) => {
 export const isUserAdmin = async (sock, msg, chatId) => {
   try {
     const isGroup = chatId.endsWith("@g.us");
-    if (!isGroup) return true;
+    if (!isGroup) return true
 
     const senderId = msg.key.participant || msg.key.remoteJid;
     const groupMetadata = await sock.groupMetadata(chatId);
@@ -96,13 +96,7 @@ export const isUserAdmin = async (sock, msg, chatId) => {
         (participant.admin === "admin" || participant.admin === "superadmin")
     );
 
-    if (!isAdmin) {
-     return  await sock.sendMessage(
-        chatId,
-        { text: "kamu bukan admin grub, tidak bisa menggunakan printah ini" },
-        { quoted: msg }
-      );
-    }
+    if (!isAdmin) return
   } catch (error) {
     console.error("Error in isUserAdmin:", error);
     return false;
@@ -115,7 +109,7 @@ export const close = async (sock, chatId, msg) => {
 	try {
 		// Cek status admin bot
 		const isAdmin = await isBotAdmin(sock, msg, chatId);
-		if (!isAdmin) return;
+		if (!isAdmin) return sock.sendMessage(chatId, {text: "admin only"}, { quoted: msg});
 
 		// Cek status admin pengirim pesan
 		const isSenderAdmin = await isUserAdmin(sock, msg, chatId);
@@ -145,7 +139,7 @@ export const open = async (sock, chatId, msg) => {
 	try {
 		// Cek status admin bot
 		const isAdmin = await isBotAdmin(sock, msg, chatId);
-		if (!isAdmin) return;
+		if (!isAdmin) return sock.sendMessage(chatId, {text: "admin only"}, { quoted: msg});
 
 		// Cek status admin pengirim pesan
 		const isSenderAdmin = await isUserAdmin(sock, msg, chatId);
@@ -537,7 +531,7 @@ export const demote = async (sock, chatId, msg) => {
 		if (!isBot) return;
 
 		const isSenderAdmin = await isUserAdmin(sock, msg, chatId);
-		if (!isSenderAdmin) return;
+		if (!isSenderAdmin) return sock.sendMessage(chatId, {text: "admin only"}, { quoted: msg});
 
 		if (!targetUser) {
 			await sock.sendMessage(

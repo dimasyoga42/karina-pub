@@ -7,7 +7,7 @@ const API_BASE_URL = "https://toramonline.vercel.app";
 export const getXtall = async (sock, chatId, msg, name) => {
     try {
 
-        const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name)}`);
+        const { data } = await Getaxios(`${API_BASE_URL}/xtall/name/${encodeURIComponent(name.trim())}`);
         if(!data) return sock.sendMessage(chatId, {text: "tidak ada"})
 
         const searchHeader = `*Hasil Pencarian untuk "${name}":*\n`;
