@@ -68,7 +68,7 @@ export const getRegist = async (sock, chatId, msg, name) => {
 ━━━━━━━━━━━━━━━━━━━━
 *Nama* : ${xtall.name}
 *level* : ${xtall.max_lv}
-*lv studied*: ${xtall.lv_studied}
+*lv studied*: ${xtall.levels_studied}
 *Stat* :
 ${xtall.effect}`.trim();
             })
