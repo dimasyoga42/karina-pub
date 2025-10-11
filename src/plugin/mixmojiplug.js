@@ -22,8 +22,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
 
 
     // Ambil URL gambar
-    const imageUrl = data.results[0]?.media_formats?.png_transparent?.url ||
-                     data.results[0]?.url;
+    const imageUrl = data.results[0]?.url;
 
     if (!imageUrl) {
       throw new Error('URL gambar tidak ditemukan');
