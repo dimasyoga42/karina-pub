@@ -15,7 +15,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
 
     if (!response.ok) throw new Error(await response.text());
 
-    const data = await response.json();
+    const data = await await response.json();
     console.log({data});
 
     // Cek apakah ada results
