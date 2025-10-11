@@ -51,36 +51,24 @@ export const isBotAdmin = async (sock, msg, chatId) => {
 export const isUserAdmin = async (sock, msg, chatId) => {
   try {
     const isGroup = chatId.endsWith("@g.us");
-    if (!isGroup) return true;
+    if (!isGroup) return true; // kalau bukan grup, izinkan
 
-    const senderId = normalizeJid(msg.key.participant || msg.key.remoteJid);
+    const senderId = msg.key.participant || msg.key.remoteJid;
     const groupMetadata = await sock.groupMetadata(chatId);
 
-    const senderParticipant = groupMetadata.participants.find(
-      (p) => normalizeJid(p.id || p.jid) === senderId
-    );
+    const participant = groupMetadata.participants.find(p => p.id === senderId);
+    if (!participant) return false; // kalau gak ditemukan
 
-    const isAdmin = ["admin", "superadmin"].includes(senderParticipant?.admin);
-    if (!isAdmin) {
-      await sock.sendMessage(
-        chatId,
-        { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." },
-        { quoted: msg }
-      );
-      return false;
-    }
+    // cek apakah admin atau superadmin
+    const isAdmin = participant.admin === "admin" || participant.admin === "superadmin";
 
-    return true;
-  } catch (err) {
-    console.error("Error in isUserAdmin:", err);
-    await sock.sendMessage(
-      chatId,
-      { text: "⚠️ Terjadi kesalahan saat memeriksa status admin pengguna." },
-      { quoted: msg }
-    );
+    return isAdmin; // ✅ kembalikan nilai benar/salah
+  } catch (error) {
+    console.error("Error in isUserAdmin:", error);
     return false;
   }
 };
+
 
 
 

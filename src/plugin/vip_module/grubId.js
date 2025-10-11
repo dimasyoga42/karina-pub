@@ -2,8 +2,11 @@ import { isUserAdmin } from "../../model/admin.js";
 
 export const GrubId = async (sock, chatId, msg) => {
   try {
-    const admin = isUserAdmin(sock, msg,  chatId);
-    if(!admin) return sock.sendMessage(chatId, {text: "admin only"}, {quoted: msg});
+   const admin = await isUserAdmin(sock, msg, chatId);
+    if (!admin) {
+      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
+      return;
+    }
     const M = msg.key.remoteJid;
     sock.sendMessage(chatId, {text: `id: ${M}`}, {quoted: msg});
   } catch (err) {
