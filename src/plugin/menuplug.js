@@ -33,10 +33,11 @@ halo ${msg.pushName}
 ➣ .item <name>
 ➣ .lv <level>
 ➣ .buff
-➣ .ability
+➣ .ability (coming soon)
 ➣ .xtall
 ➣ .regist
-➣ .bos
+➣ .bos (coming soon)
+➣ .pembolong (coming soon)
 ━━━━━━━━━━━━━━━━━━
 *Guide Toram*
 ━━━━━━━━━━━━━━━━━━`;

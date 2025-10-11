@@ -17,6 +17,9 @@ try {
     const name = text.replace(".ability", "");
    await  ability(sock, chatId, msg, name.trim());
   }
+  if(text.startsWith(".pembolong")) {
+
+  }
 } catch (err) {
   console.log(err)
 }
