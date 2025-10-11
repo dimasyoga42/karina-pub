@@ -15,7 +15,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
 
     const data = await response.json();
     const imageUrl = data.results[0].url;
-    console.log(imageUrl)
+    console.log(data)
 
     if (!imageUrl) {
       await sock.sendMessage(chatId, {
