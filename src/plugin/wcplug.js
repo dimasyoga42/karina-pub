@@ -6,8 +6,11 @@ const db = path.resolve("db", "welcome.js");
 
 export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
   try {
-    const isAdmin = await isUserAdmin(sock, msg, chatId);
-    if (!isAdmin) return false;
+    const admin = await isUserAdmin(sock, msg, chatId);
+    if (!admin) {
+      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
+      return;
+    }
 
     const data = getUserData(db);
     const grubId = msg.key.remoteJid;

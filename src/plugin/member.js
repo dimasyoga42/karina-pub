@@ -6,10 +6,10 @@ const dbPath = path.resolve("db", "grubmem.json");
 export const setMember = async (sock, chatId, msg, role, ign) => {
   try {
     // hanya admin yang boleh tambah member
-    if (!isUserAdmin(sock, msg, chatId)) {
-      return await sock.sendMessage(chatId, {
-        text: "❌ Hanya admin yang bisa menggunakan perintah ini!",
-      });
+     const admin = await isUserAdmin(sock, msg, chatId);
+    if (!admin) {
+      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
+      return;
     }
 
     let data = getUserData(dbPath) || [];

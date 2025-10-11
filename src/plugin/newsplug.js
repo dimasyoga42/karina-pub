@@ -5,7 +5,11 @@ import { isUserAdmin } from "../model/admin.js";
 const db = path.resolve("db", "news/news.json")
 export const setnews = async (sock, chatId, msg, news) => {
   try {
-    if(!isUserAdmin(sock, msg, chatId)) return;
+     const admin = await isUserAdmin(sock, msg, chatId);
+    if (!admin) {
+      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
+      return;
+    }
     const data = getUserData(db);
     const id = msg.key.remoteJid;
     const name = msg.pushName;

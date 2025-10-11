@@ -6,8 +6,11 @@ import { text } from "stream/consumers";
 const db = path.resolve("db", "rules.json");
 export const setRules = async (sock, chatId, msg, rule) => {
 try {
-  const isAdmin = isUserAdmin(sock, msg, chatId);
-  if(!isAdmin) return sock.sendMessage(chatId, {text: "admin only"}, { quoted: msg});
+   const admin = await isUserAdmin(sock, msg, chatId);
+    if (!admin) {
+      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
+      return;
+    }
   const data = getUserData(db);
   const grubId = msg.key.remoteJid
   const name = msg.pushName
