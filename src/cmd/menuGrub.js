@@ -1,5 +1,6 @@
 import { saran } from "../config/config.js";
 import { getItems } from "../plugin/itemsplug.js";
+import { funcHandler } from "../plugin/lib/hendler.js";
 import { screper } from "../plugin/lvlplug.js";
 import { getMember, setMember } from "../plugin/member.js";
 import { menu } from "../plugin/menuplug.js";
@@ -11,6 +12,8 @@ import { rules } from "../plugin/rulesplug.js";
 
 export const cmdGrub = async (sock, text, chatId, msg) => {
   try {
+    const command = text.split(" ")[0].toLowerCase();
+    const arg = text.slice(command.length).trim();
     // Validasi input - PENTING untuk menghindari error
     if (!text || typeof text !== 'string') {
       console.error("Invalid text parameter:", typeof text, text);
@@ -131,11 +134,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       qc(sock, chatId, msg, message);
       return;
     }
-    if (normalizedText.startsWith(".saran")) {
-      const message = text.replace(".saran", "").trim();
-      saran(sock, chatId, msg, message);
-      return;
-    }
+
     if (text.startsWith(".mixmoji")) {
       const message = text.split("|")
       const arg1 = message[1]
@@ -143,6 +142,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       Mix(sock, chatId, msg, arg1, arg2);
       return;
     }
+    funcHandler(text, sock, chatId, msg, ".saran", arg, "masukan saran setelah .saran", async () => await  saran(sock, chatId, msg, arg) )
   } catch (error) {
     console.error("Error in cmdGrub:", error);
     await sock.sendMessage(chatId, {
