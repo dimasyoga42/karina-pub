@@ -18,8 +18,8 @@ halo ${msg.pushName}
 ➣ .profile
 ➣ .cekprofile
 ➣ .member
-➣ .qc
-➣ .mixmoji
+➣ .qc (err sementara)
+➣ .mixmoji (bug)
 ━━━━━━━━━━━━━━━━━━
 *Admin:*
 ➣ .close
