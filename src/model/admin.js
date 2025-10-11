@@ -95,6 +95,7 @@ export const isUserAdmin = async (sock, msg, chatId) => {
         participant.id === senderId &&
         (participant.admin === "admin" || participant.admin === "superadmin")
     );
+    if(!isAdmin) return
 
     return isAdmin; // <- penting, supaya hasil dikembalikan
   } catch (error) {
