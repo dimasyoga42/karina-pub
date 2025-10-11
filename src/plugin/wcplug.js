@@ -20,6 +20,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
        sock.sendMessage(chatId, {
         text: "Format salah\nCara penggunaan:\n- `.setwelcome <pesan welcome>`\n\nGunakan variabel:\n- @user = mention user baru\n- @group = nama grup"
       });
+      return
     }
 
     let eWelcome = data.find((i) => i.grubId === grubId);
