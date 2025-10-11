@@ -16,6 +16,7 @@ export const Mix = async (sock, chatId, msg, argone, argtow) => {
     );
 
     // Cek apakah ada results
+    console.log({data})
     if (!data.results || data.results.length === 0) {
       await sock.sendMessage(chatId, {
         text: `❌ Emoji mix tidak ditemukan untuk ${mixmoji1} + ${mixmoji2}`
@@ -24,8 +25,7 @@ export const Mix = async (sock, chatId, msg, argone, argtow) => {
     }
 
     // Ambil URL gambar (biasanya di results[0].media_formats.png_transparent.url)
-    const imageUrl = data.results[0]?.media_formats?.png_transparent?.url ||
-                     data.results[0]?.url;
+    const imageUrl = data.results[0]?.url;
 
     if (!imageUrl) {
       throw new Error('URL gambar tidak ditemukan');
