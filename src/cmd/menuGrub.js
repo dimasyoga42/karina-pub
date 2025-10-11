@@ -49,7 +49,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
     }
 
 
-    funcHandler(text, sock, chatId, msg, ".item", null, arg, "masukan nama item setelah `.item`", async () => getItems(sock, chatId, msg, arg))
+    funcHandler(text, sock, chatId, msg, ".item", null, arg, "masukan nama item setelah `.item`", async () => { getItems(sock, chatId, msg, arg) })
 
     // Level
     if (normalizedText.startsWith(".lv")) {
