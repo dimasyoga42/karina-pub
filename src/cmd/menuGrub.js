@@ -49,7 +49,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
     }
 
 
-    funcHandler(text, sock, chatId, msg, ".item", " ", arg, "masukan nama item setelah `.item`", async () => { getItems(sock, chatId, msg, arg) })
+    funcHandler(text, sock, chatId, msg, ".item", null, arg, "masukan nama item setelah `.item`", async () => { getItems(sock, chatId, msg, arg) })
 
     // Level
     if (normalizedText.startsWith(".lv")) {
@@ -63,23 +63,21 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       await screper(sock, chatId, msg, level, 7);
       return;
     }
-    // if (text.startsWith(".setmember")) {
-    //         const arg = text.split(",").map(a => a.trim()); // trim spasi
-    //         const mention = arg[1]; // mention target user
-    //         const ign = arg[2];
-    //         const role = arg[3];
+    if (text.startsWith(".setmember")) {
+            const arg = text.split(",").map(a => a.trim()); // trim spasi
+            const mention = arg[1]; // mention target user
+            const ign = arg[2];
+            const role = arg[3];
 
-    //         if (!ign || !role) {
-    //           await sock.sendMessage(chatId, {
-    //             text: "❌ Format salah!\nGunakan: `.setmember ,@user ,IGN ,Role`",
-    //           });
-    //           return;
-    //         }
-    //         setMember(sock, chatId, msg, role, ign);
-    //       }
-    funcHandler(text, sock, chatId, msg, ".setmember", ",", arg, "format anda salah `.setmember ,mention ,ign, role",  async (ign, role) =>  {
-      setMember(sock, chatId, msg, ign, role)
-    })
+            if (!ign || !role) {
+              await sock.sendMessage(chatId, {
+                text: "❌ Format salah!\nGunakan: `.setmember ,@user ,IGN ,Role`",
+              });
+              return;
+            }
+            setMember(sock, chatId, msg, role, ign);
+          }
+
           if (text === ".member") {
             getMember(sock, chatId, msg)
           }
