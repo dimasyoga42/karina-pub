@@ -4,6 +4,7 @@ import { getMember, setMember } from "../plugin/member.js";
 import { menu } from "../plugin/menuplug.js";
 import { news } from "../plugin/newsplug.js";
 import { cekBio, cekProfile, myBio, myProfile, setDesc, setPP } from "../plugin/plugprofil.js";
+import { qc } from "../plugin/qc.plug.js";
 import { rules } from "../plugin/rulesplug.js";
 
 export const cmdGrub = async (sock, text, chatId, msg) => {
@@ -117,7 +118,17 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       await cekProfile(sock, chatId, msg);
       return;
     }
-
+    if (normalizedText.startsWith(".qc")) {
+      const message = text.replace(/^\.qc\s*/i, "").trim();
+      if (!message) {
+        await sock.sendMessage(chatId, {
+          text: "mana teks nya"
+        }, { quoted: msg });
+        return;
+      }
+      qc(sock, chatId, msg, message);
+      return;
+    }
   } catch (error) {
     console.error("Error in cmdGrub:", error);
     await sock.sendMessage(chatId, {
