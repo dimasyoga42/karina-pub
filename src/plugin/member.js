@@ -5,74 +5,66 @@ const dbPath = path.resolve("db", "grubmem.json");
 
 export const setMember = async (sock, chatId, msg, role, ign) => {
   try {
-    // hanya admin yang boleh tambah member
-     const admin = await isUserAdmin(sock, msg, chatId);
-    if (!admin) {
-      await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
-      return;
+    const isGroup = chatId.endsWith("@g.us");
+    let admin = true;
+
+    if (isGroup) {
+      admin = await isUserAdmin(sock, msg, chatId);
+      if (!admin) {
+        await sock.sendMessage(chatId, {
+          text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup.",
+        }, { quoted: msg });
+        return;
+      }
     }
 
-    let data = getUserData(dbPath) || [];
+    let data = getUserData(dbPath);
+    if (!Array.isArray(data)) data = [];
 
-    // ambil mention dari pesan admin
     const mentioned = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid || [];
     if (mentioned.length === 0) {
       await sock.sendMessage(chatId, {
         text: "❌ Harap mention user yang mau ditambahkan!",
       });
+      return;
     }
 
-    const target = mentioned[0]; // user yang ditambahkan
+    const target = mentioned[0];
 
-    // validasi input role & ign
     if (!role || !ign) {
       await sock.sendMessage(chatId, {
-        text: "❌ Harap sertakan *Role* dan *IGN*!",
+        text: "❌ Harap sertakan *Role* dan *IGN*! Contoh:\n.setmember @user Tank Dimas",
       });
+      return;
     }
 
-    // cari grub berdasarkan chatId
     let dataEntry = data.find((item) => item.grubId === chatId);
-
     if (!dataEntry) {
-      const newData = {
-        grubId: chatId,
-        member: [],
-      };
-
-      newData.member.push({
-        role,
-        ign,
-        owner: target, // simpan pemilik akun dari mention
-      });
-
-      data.push(newData);
-      saveUserData(dbPath, data);
-    } else {
-      // cek duplicate member
-      const exists = dataEntry.member.find((m) => m.owner === target);
-      if (exists) {
-        await sock.sendMessage(chatId, {
-          text: ` @${target.split("@")[0]} sudah terdaftar sebagai member.`,
-          mentions: [target],
-        });
-      }
-
-      dataEntry.member.push({
-        role,
-        ign,
-        owner: target,
-      });
-      saveUserData(dbPath, data);
+      dataEntry = { grubId: chatId, member: [] };
+      data.push(dataEntry);
     }
 
-    // balasan bot mention target
+    const exists = dataEntry.member.find((m) => m.owner === target);
+    if (exists) {
+      await sock.sendMessage(chatId, {
+        text: `⚠️ @${target.split("@")[0]} sudah terdaftar.`,
+        mentions: [target],
+      });
+      return;
+    }
+
+    dataEntry.member.push({ role, ign, owner: target });
+    saveUserData(dbPath, data);
+
     await sock.sendMessage(chatId, {
-      text: ` @${target.split("@")[0]} berhasil ditambahkan!\nRole: *${role}*\nIGN: *${ign}*`,
+      text: `✅ @${target.split("@")[0]} berhasil ditambahkan!\nRole: *${role}*\nIGN: *${ign}*`,
       mentions: [target],
     });
   } catch (err) {
-  //  errMessage(sock, chatId, msg, err);
+    console.error("Error di setMember:", err);
+    await sock.sendMessage(chatId, {
+      text: `❌ Terjadi kesalahan: ${err.message}`,
+    });
   }
 };
 
