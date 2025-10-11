@@ -19,6 +19,7 @@ halo ${msg.pushName}
 ➣ .cekprofile
 ➣ .member
 ➣ .qc
+➣ .mixmoji
 ━━━━━━━━━━━━━━━━━━
 *Admin:*
 ➣ .close

@@ -2,6 +2,7 @@ import { getItems } from "../plugin/itemsplug.js";
 import { screper } from "../plugin/lvlplug.js";
 import { getMember, setMember } from "../plugin/member.js";
 import { menu } from "../plugin/menuplug.js";
+import { Mix } from "../plugin/mixmojiplug.js";
 import { news } from "../plugin/newsplug.js";
 import { cekBio, cekProfile, myBio, myProfile, setDesc, setPP } from "../plugin/plugprofil.js";
 import { qc } from "../plugin/qc.plug.js";
@@ -127,6 +128,13 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
         return;
       }
       qc(sock, chatId, msg, message);
+      return;
+    }
+    if (normalizedText.startsWith(".mixmoji")) {
+      const message = text.split("|")
+      const arg1 = message[0]
+      const arg2 = message[1]
+      Mix(sock, chatId, msg, arg1, arg2);
       return;
     }
   } catch (error) {
