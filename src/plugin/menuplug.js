@@ -18,6 +18,7 @@ halo ${msg.pushName}
 ➣ .profile
 ➣ .cekprofile
 ➣ .member
+➣ .qc
 ━━━━━━━━━━━━━━━━━━
 *Admin:*
 ➣ .close
