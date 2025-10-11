@@ -1,106 +1,84 @@
 import { downloadMediaMessage } from "@whiskeysockets/baileys";
+
+/* 🔹 Utility: Normalisasi JID */
+const normalizeJid = (jid = "") => jid.replace(/(:\d+)?@.*/, "@s.whatsapp.net");
+
+/* 🔹 Cek apakah BOT adalah admin grup */
 export const isBotAdmin = async (sock, msg, chatId) => {
-	try {
-		const isGroup = chatId.endsWith("@g.us");
-		if (!isGroup) return true; // Bukan grup, anggap bot sebagai admin
+  try {
+    const isGroup = chatId.endsWith("@g.us");
+    if (!isGroup) return true;
 
-		// Dapatkan metadata grup
-		const groupMetadata = await sock.groupMetadata(chatId);
-		if (!groupMetadata) {
-			console.error("Tidak dapat mengambil metadata grup");
-			return false;
-		}
+    const groupMetadata = await sock.groupMetadata(chatId);
+    if (!groupMetadata) {
+      console.error("Gagal mengambil metadata grup");
+      return false;
+    }
 
-		// Dapatkan nomor bot
-		const botJid = sock.user.id; // Format: 628xxx:36@s.whatsapp.net
-		const botNumber = sock.user.id.split(':')[0] + "@s.whatsapp.net"; // Format: 628xxx@s.whatsapp.net
+    const botId = normalizeJid(sock.user?.id);
+    const botParticipant = groupMetadata.participants.find(
+      (p) => normalizeJid(p.id || p.jid) === botId
+    );
 
-		// Debug log
-		console.log("Bot JID:", botJid);
-		console.log("Bot Number:", botNumber);
-		console.log("Total Participants:", groupMetadata.participants.length);
-		console.log("Participants:", groupMetadata.participants.map(p => ({
-			id: p.id,
-			jid: p.jid,
-			lid: p.lid,
-			admin: p.admin
-		})));
+    if (!botParticipant) {
+      await sock.sendMessage(chatId, { text: "⚠️ Bot tidak ditemukan dalam grup ini." }, { quoted: msg });
+      return false;
+    }
 
-		// PENTING: Cari berdasarkan properti 'jid', bukan 'id'
-		// 'id' adalah Local ID (@lid), sedangkan 'jid' adalah nomor WhatsApp asli
-		const botParticipant = groupMetadata.participants.find(participant => {
-			// Cocokkan dengan jid (nomor WhatsApp asli)
-			return participant.jid === botJid ||
-			       participant.jid === botNumber ||
-			       participant.jid === sock.user.id.split('@')[0] + "@s.whatsapp.net";
-		});
+    const isAdmin = ["admin", "superadmin"].includes(botParticipant.admin);
+    if (!isAdmin) {
+      await sock.sendMessage(
+        chatId,
+        { text: "⚠️ Bot bukan admin! Berikan izin admin agar fitur ini berfungsi." },
+        { quoted: msg }
+      );
+      return false;
+    }
 
-		console.log("Bot participant found:", botParticipant);
-
-		// Jika bot tidak ditemukan di grup
-		if (!botParticipant) {
-			console.error("Bot tidak ditemukan sebagai member grup");
-			return await sock.sendMessage(
-				chatId,
-				{
-					text: "Bot tidak ditemukan sebagai member grup ini.",
-				},
-				{ quoted: msg }
-			);
-			//return false;
-		}
-
-		// Cek status admin - admin bisa 'admin' atau 'superadmin'
-		const isAdmin = botParticipant.admin === 'admin' || botParticipant.admin === 'superadmin';
-
-		console.log("Bot admin status:", botParticipant.admin);
-		console.log("Is bot admin:", isAdmin);
-
-		if (!isAdmin) {
-		return	await sock.sendMessage(
-				chatId,
-				{
-					text: "*BOT BUKAN ADMIN*\nBot memerlukan status admin untuk menjalankan perintah ini.",
-				},
-				{ quoted: msg }
-			);
-			//return false;
-		}
-
-		return true;
-
-	} catch (error) {
-		console.error("Error dalam pengecekan status admin bot:", error);
-		await sock.sendMessage(
-			chatId,
-			{
-				text: "⚠️ Terjadi kesalahan saat memeriksa status admin bot.",
-			},
-			{ quoted: msg }
-		);
-		return false;
-	}
+    return true;
+  } catch (err) {
+    console.error("Error in isBotAdmin:", err);
+    await sock.sendMessage(
+      chatId,
+      { text: "⚠️ Gagal memeriksa status admin bot." },
+      { quoted: msg }
+    );
+    return false;
+  }
 };
-// Cek apakah USER adalah admin
+
+/* 🔹 Cek apakah USER adalah admin grup */
 export const isUserAdmin = async (sock, msg, chatId) => {
   try {
     const isGroup = chatId.endsWith("@g.us");
-    if (!isGroup) return true; // Jika bukan grup, anggap user adalah "admin"
+    if (!isGroup) return true;
 
-    const senderId = msg.key.participant || msg.key.remoteJid;
+    const senderId = normalizeJid(msg.key.participant || msg.key.remoteJid);
     const groupMetadata = await sock.groupMetadata(chatId);
 
-    const isAdmin = groupMetadata.participants.some(
-      (participant) =>
-        participant.id === senderId &&
-        (participant.admin === "admin" || participant.admin === "superadmin")
+    const senderParticipant = groupMetadata.participants.find(
+      (p) => normalizeJid(p.id || p.jid) === senderId
     );
-    if(!isAdmin) return
 
-    return isAdmin; // <- penting, supaya hasil dikembalikan
-  } catch (error) {
-    console.error("Error in isUserAdmin:", error);
-    return false; // kembalikan false jika ada error
+    const isAdmin = ["admin", "superadmin"].includes(senderParticipant?.admin);
+    if (!isAdmin) {
+      await sock.sendMessage(
+        chatId,
+        { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." },
+        { quoted: msg }
+      );
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error("Error in isUserAdmin:", err);
+    await sock.sendMessage(
+      chatId,
+      { text: "⚠️ Terjadi kesalahan saat memeriksa status admin pengguna." },
+      { quoted: msg }
+    );
+    return false;
   }
 };
 
