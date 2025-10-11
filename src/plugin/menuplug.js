@@ -33,7 +33,7 @@ halo ${msg.pushName}
 ➣ .item <name>
 ➣ .lv <level>
 ➣ .buff
-➣ .ability (coming soon)
+➣ .ability
 ➣ .xtall
 ➣ .regist
 ➣ .bos (coming soon)
