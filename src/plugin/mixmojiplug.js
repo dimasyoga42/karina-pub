@@ -19,12 +19,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
     const data = await response.json();
 
     // Cek apakah ada results
-    if (!data.results || data.results.length === 0) {
-      await sock.sendMessage(chatId, {
-        text: `❌ Emoji mix tidak ditemukan untuk ${mixmoji1} + ${mixmoji2}`
-      }, { quoted: msg });
-      return;
-    }
+
 
     // Ambil URL gambar
     const imageUrl = data.results[0]?.media_formats?.png_transparent?.url ||
@@ -37,7 +32,7 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
     // Download gambar dari URL
     const imageResponse = await fetch(imageUrl);
     const arrayBuffer = await imageResponse.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const buffer = Buffer.from(imageUrl);
 
     // Konversi ke sticker
     const sticker = await sharp(buffer)
