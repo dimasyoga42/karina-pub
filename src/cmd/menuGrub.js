@@ -120,7 +120,7 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
       return;
     }
     if (normalizedText.startsWith(".qc")) {
-      const message = text.replace(/^\.qc\s*/i, "").trim();
+      const message = text.replace(".qc", "").trim();
       if (!message) {
         await sock.sendMessage(chatId, {
           text: "mana teks nya"
