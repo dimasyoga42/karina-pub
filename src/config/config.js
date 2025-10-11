@@ -49,7 +49,7 @@ export const saran = async (s, c, m, arg) => {
     const senderName = m.pushName;
     const template = `
     *KOTAK SARAN*\nNama Pengirim : ${senderName}\n Saran: ${arg}
-    `
+    `.trim()
     s.sendMessage("6285789109095@s.whatsapp.net", {text: template })
     s.sendMessage(c, {text: template }, {quoted: m})
   } catch (err) {
