@@ -11,8 +11,10 @@ export const Mix = async (sock, chatId, msg, argone, argtwo) => {
 
     // Request ke Tenor API
     const response = await fetch(
-      `https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${mixmoji1}_${mixmoji2}`
+      `https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(mixmoji1)}_${encodeURIComponent(mixmoji2)}`
     );
+
+    if (!response.ok) throw new Error(await response.text());
 
     const data = await response.json();
 
