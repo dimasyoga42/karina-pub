@@ -49,17 +49,18 @@ export const cmdGrub = async (sock, text, chatId, msg) => {
     }
 
     // Get Items
-    if (normalizedText.startsWith(".item")) {
-      const name = text.replace(/^\.item\s*/i, "").trim();
-      if (!name) {
-        await sock.sendMessage(chatId, {
-          text: "❌ Format salah!\nPenggunaan: `.item <nama item>`"
-        }, { quoted: msg });
-        return;
-      }
-      await getItems(sock, chatId, msg, name);
-      return;
-    }
+    // if (normalizedText.startsWith(".item")) {
+    //   const name = text.replace(/^\.item\s*/i, "").trim();
+    //   if (!name) {
+    //     await sock.sendMessage(chatId, {
+    //       text: "❌ Format salah!\nPenggunaan: `.item <nama item>`"
+    //     }, { quoted: msg });
+    //     return;
+    //   }
+    //   await getItems(sock, chatId, msg, name);
+    //   return;
+    // }
+    funcHandler(text, sock, chatId, msg, ".item", null, arg, "masukan nama item setelah `.item`", async () => getItems(sock, chatId, msg, arg))
 
     // Level
     if (normalizedText.startsWith(".lv")) {
