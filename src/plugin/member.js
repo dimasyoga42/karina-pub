@@ -1,5 +1,5 @@
 import { getUserData, saveUserData } from "../config/config.js";
-import { isUserAdmin } from "../model/admin.js";
+import { checkAdminPermissions } from "../model/admin.js";
 import path from "path"
 const dbPath = path.resolve("db", "grubmem.json");
 
@@ -9,7 +9,7 @@ export const setMember = async (sock, chatId, msg, role, ign) => {
     let admin = true;
 
     if (isGroup) {
-      admin = await isUserAdmin(sock, msg, chatId);
+      admin = await checkAdminPermissions(sock, msg, chatId);
       if (!admin) {
         await sock.sendMessage(chatId, {
           text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup.",

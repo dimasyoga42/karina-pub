@@ -15,7 +15,7 @@ const normalizeJid = (jid = "") => jid.replace(/:\d+@s\.whatsapp\.net$/, "@s.wha
  * Mengambil metadata grup sekali dan mengembalikan status admin untuk bot dan pengirim.
  * @returns {Promise<{isGroup: boolean, metadata: object, bot: {isAdmin: boolean, isCreator: boolean}, sender: {isAdmin: boolean, isCreator: boolean}}>}
  */
-const checkAdminPermissions = async (sock, msg) => {
+export const checkAdminPermissions = async (sock, msg) => {
   const chatId = msg.key.remoteJid;
   const isGroup = chatId.endsWith(CONSTANTS.GROUP_SUFFIX);
   if (!isGroup) {

@@ -1,12 +1,12 @@
 //import { create } from "domain";
 import { getUserData, saveUserData } from "../config/config.js";
 import path from "path"
-import { isUserAdmin } from "../model/admin.js";
+import { checkAdminPermissions } from "../model/admin.js";
 import { text } from "stream/consumers";
 const db = path.resolve("db", "rules.json");
 export const setRules = async (sock, chatId, msg, rule) => {
 try {
-   const admin = await isUserAdmin(sock, msg, chatId);
+   const admin = await checkAdminPermissions(sock, msg);
     if (!admin) {
       await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
       return;

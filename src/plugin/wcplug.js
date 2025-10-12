@@ -1,12 +1,12 @@
 import { getUserData, saveUserData } from "../config/config.js";
 import path from "path";
-import { isUserAdmin } from "../model/admin.js";
+import { checkAdminPermissions } from "../model/admin.js";
 
 const db = path.resolve("db", "welcome.js");
 
 export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
   try {
-    const admin = await isUserAdmin(sock, msg, chatId);
+    const admin = await checkAdminPermissions(sock, msg);
     if (!admin) {
       await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
       return;
@@ -66,7 +66,7 @@ export const setWelcome = async (sock, chatId, msg, welcomeMsg) => {
 // Fungsi untuk toggle welcome on/off
 export const toggleWelcome = async (sock, chatId, msg, status) => {
   try {
-    const isAdmin = await isUserAdmin(sock, msg, chatId);
+    const isAdmin = await checkAdminPermissions(sock, msg);
     if (!isAdmin) return false;
 
     const data = getUserData(db);
