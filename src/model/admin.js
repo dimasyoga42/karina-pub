@@ -15,8 +15,8 @@ const normalizeJid = (jid = "") => jid.replace(/:\d+@s\.whatsapp\.net$/, "@s.wha
  * Mengambil metadata grup sekali dan mengembalikan status admin untuk bot dan pengirim.
  * @returns {Promise<{isGroup: boolean, metadata: object, bot: {isAdmin: boolean, isCreator: boolean}, sender: {isAdmin: boolean, isCreator: boolean}}>}
  */
-export const checkAdminPermissions = async (sock, msg) => {
-  const chatId = msg.key.remoteJid;
+export const checkAdminPermissions = async (sock, msg, chatId) => {
+ // const chatId = msg.key.remoteJid;
   const isGroup = chatId.endsWith(CONSTANTS.GROUP_SUFFIX);
   if (!isGroup) {
     return { isGroup: false, metadata: null, bot: { isAdmin: true }, sender: { isAdmin: true } };
@@ -71,9 +71,8 @@ const getTargetJid = (msg, arg = "") => {
 //                                FUNGSI UTAMA GRUP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export const close = async (sock, msg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const close = async (sock, msg, chatId) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) return;
   if (!permissions.sender.isAdmin) {
@@ -92,9 +91,8 @@ export const close = async (sock, msg) => {
   }
 };
 
-export const open = async (sock, msg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const open = async (sock, msg, chatId) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) return;
   if (!permissions.sender.isAdmin) {
@@ -113,9 +111,8 @@ export const open = async (sock, msg) => {
   }
 };
 
-export const kick = async (sock, msg, arg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const kick = async (sock, msg, chatId,  arg) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) return;
   if (!permissions.sender.isAdmin) {
@@ -142,9 +139,8 @@ export const kick = async (sock, msg, arg) => {
   }
 };
 
-export const promote = async (sock, msg, arg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const promote = async (sock, msg, chatId, arg) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) return;
   if (!permissions.sender.isAdmin) {
@@ -168,9 +164,8 @@ export const promote = async (sock, msg, arg) => {
   }
 };
 
-export const demote = async (sock, msg, arg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const demote = async (sock, msg, chatId,  arg) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) return;
   if (!permissions.sender.isAdmin) {
@@ -203,9 +198,8 @@ export const demote = async (sock, msg, arg) => {
  * 🔹 Fungsi utama hidetag.
  * Mengirim pesan ke semua anggota grup.
  */
-export const hidetag = async (sock, msg, arg) => {
-  const chatId = msg.key.remoteJid;
-  const permissions = await checkAdminPermissions(sock, msg);
+export const hidetag = async (sock, msg, chatId,  arg) => {
+  const permissions = await checkAdminPermissions(sock, msg, chatId);
 
   if (!permissions.isGroup) {
     return sock.sendMessage(chatId, { text: "⚠️ Fitur hidetag hanya bisa digunakan di grup." }, { quoted: msg });

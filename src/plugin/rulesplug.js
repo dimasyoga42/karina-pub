@@ -6,7 +6,7 @@ import { text } from "stream/consumers";
 const db = path.resolve("db", "rules.json");
 export const setRules = async (sock, chatId, msg, rule) => {
 try {
-   const admin = await checkAdminPermissions(sock, msg);
+   const admin = await checkAdminPermissions(sock, msg, chatId);
     if (!admin) {
       await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
       return;

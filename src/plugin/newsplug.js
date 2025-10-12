@@ -5,7 +5,7 @@ import { checkAdminPermissions } from "../model/admin.js";
 const db = path.resolve("db", "news/news.json")
 export const setnews = async (sock, chatId, msg, news) => {
   try {
-     const admin = await checkAdminPermissions(sock, msg);
+     const admin = await checkAdminPermissions(sock, msg, chatId);
     if (!admin) {
       await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
       return;
