@@ -18,8 +18,7 @@ gunakan .saran untuk request / report bug fitur dll
 ➣ .profile
 ➣ .cekprofile
 ➣ .member
-➣ .qc (err sementara)
-➣ .mixmoji (bug)
+➣ .qc
 ━━━━━━━━━━━━━━━━━━
 *Admin:*
 ➣ .close
