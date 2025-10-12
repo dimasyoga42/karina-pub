@@ -15,7 +15,7 @@ export const isBotAdmin = async (sock, msg, chatId) => {
       return false;
     }
 
-    const botId = normalizeJid(sock.user?.id);
+    const botId = normalizeJid(sock.user.id);
     const botParticipant = groupMetadata.participants.find(
       (p) => normalizeJid(p.id || p.jid) === botId
     );
