@@ -105,7 +105,7 @@ export const getItems = async (sock, chatId, msg, name) => {
 
     let message = `TORAM ONLINE - ITEM SEARCH\n`;
     message += `Query: "${name}" | Results: ${items.length} item(s)\n`;
-    message += `${'='.repeat(35)}\n\n`;
+    message += `${'━━━━━━━━━━━━━━━━━'}\n\n`;
 
     items.forEach((item, index) => {
       message += `[${index + 1}] ${item.name}\n`;
@@ -130,11 +130,11 @@ export const getItems = async (sock, chatId, msg, name) => {
       }
 
       if (index < items.length - 1) {
-        message += `\n${'-'.repeat(35)}\n\n`;
+       message += `\n${'━━━━━━━━━━━━━━━━━'}\n\n`;
       }
     });
 
-    message += `${'='.repeat(35)}`;
+    message += `${'━━━━━━━━━━━━━━━━━'}`;
 
     await sock.sendMessage(chatId, { text: message }, { quoted: msg });
 
