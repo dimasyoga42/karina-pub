@@ -1,8 +1,8 @@
-import { isUserAdmin } from "../../model/admin.js";
+import { checkAdminPermissions } from "../../model/admin.js";
 
 export const GrubId = async (sock, chatId, msg) => {
   try {
-   const admin = await isUserAdmin(sock, msg, chatId);
+   const admin = await checkAdminPermissions(sock, msg);
     if (!admin) {
       await sock.sendMessage(chatId, { text: "🚫 Fitur ini hanya bisa digunakan oleh admin grup." }, { quoted: msg });
       return;
